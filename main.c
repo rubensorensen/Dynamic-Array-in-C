@@ -23,11 +23,13 @@ int main(void)
 
     for (uint32_t i = 0; i < 5; ++i) {
         uint32_t index = rand() % array_size(arr);
+        // array_erase preserves order in array
         array_erase(arr, index);
     }
     
     for (uint32_t i = 0; i < 5; ++i) {
         uint32_t index = rand() % array_size(arr);
+        // array_erase_fast does NOT preserve order in array
         array_erase_fast(arr, index);
     }
     
