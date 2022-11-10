@@ -1,6 +1,10 @@
 build: main.c array.c
 	gcc -Wall -Wextra -std=c11 main.c array.c -o array
 
+.PHONY: run
+run: build
+	./array
+
 .PHONY: main.c array.c
 main.c array.c: array.h
 
