@@ -8,7 +8,7 @@
 
 // Public API
 #define array_alloc(type)              _array_alloc(DEFAULT_ARRAY_INIT_SIZE, sizeof(type))
-#define array_alloc_x(type, init_size) _array_alloc(x, sizeof(type))
+#define array_alloc_x(type, init_size) _array_alloc(init_size, sizeof(type))
 #define array_free(arr)                _array_free(arr)
 
 #define array_size(arr)             _array_size(arr)
