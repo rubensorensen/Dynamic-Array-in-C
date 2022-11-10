@@ -5,33 +5,33 @@
 
 int main(void)
 {
-    u32* arr = array_alloc(u32);
+    uint32_t* arr = array_alloc(uint32_t);
     
-    for (u32 i = 0; i < 50; ++i) {
+    for (uint32_t i = 0; i < 50; ++i) {
         array_push(arr, i);
     }
     
-    for (u32 i = 0; i < 50; ++i) {
-        array_push_rval(arr, u32, i * 3);
+    for (uint32_t i = 0; i < 50; ++i) {
+        array_push_rval(arr, uint32_t, i * 3);
     }
     
-    for (u32 i = 0; i < 10; ++i) {
-        u32 val;
+    for (uint32_t i = 0; i < 10; ++i) {
+        uint32_t val;
         array_pop(arr, &val);
         printf("Popped %u\n", val);
     }
 
-    for (u32 i = 0; i < 5; ++i) {
-        u32 index = rand() % array_size(arr);
+    for (uint32_t i = 0; i < 5; ++i) {
+        uint32_t index = rand() % array_size(arr);
         array_erase(arr, index);
     }
     
-    for (u32 i = 0; i < 5; ++i) {
-        u32 index = rand() % array_size(arr);
+    for (uint32_t i = 0; i < 5; ++i) {
+        uint32_t index = rand() % array_size(arr);
         array_erase_fast(arr, index);
     }
     
-    for (u32 i = 0; i < array_size(arr); ++i) {
+    for (uint32_t i = 0; i < array_size(arr); ++i) {
         printf("[%u] %u\n", i, arr[i]);
     }
     

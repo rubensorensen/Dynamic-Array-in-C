@@ -3,19 +3,6 @@
 
 #include <stdint.h>
 
-typedef int64_t s64;
-typedef int32_t s32;
-typedef int16_t s16;
-typedef int8_t  s8;
-
-typedef uint64_t u64;
-typedef uint32_t u32;
-typedef uint16_t u16;
-typedef uint8_t  u8;
-
-typedef double f64;
-typedef float  f32;
-
 #define DEFAULT_ARRAY_INIT_SIZE  10
 #define RESIZE_SCALE_FACTOR      2
 
@@ -39,14 +26,14 @@ typedef float  f32;
 #define array_erase_fast(arr, loc) _array_erase_fast(arr, loc)
 
 // Private defitions
-void* _array_alloc(u32 init_capacity, u32 stride);
+void* _array_alloc(uint32_t init_capacity, uint32_t stride);
 void _array_free(void* arr);
-u32 _array_size(void* arr);
-void* _array_resize(void* arr, u32 new_capacity);
+uint32_t _array_size(void* arr);
+void* _array_resize(void* arr, uint32_t new_capacity);
 void* _array_push(void* arr, void* ptr_to_val);
-void* _array_push_at(void* arr, u32 loc, void* ptr_to_val);
+void* _array_push_at(void* arr, uint32_t loc, void* ptr_to_val);
 void _array_pop(void* arr, void* dest);
-void _array_erase(void* arr, u32 loc);
-void _array_erase_fast(void* arr, u32 loc);
+void _array_erase(void* arr, uint32_t loc);
+void _array_erase_fast(void* arr, uint32_t loc);
 
 #endif // _ARRAY_H

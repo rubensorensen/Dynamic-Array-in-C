@@ -12,19 +12,19 @@ typedef enum _ARRAY_FIELD {
     ARRAY_FIELD_ENUM_COUNT
 } ARRAY_FIELD;
 
-#define HEADER_SIZE (sizeof(u32) * ARRAY_FIELD_ENUM_COUNT)
+#define HEADER_SIZE (sizeof(uint32_t) * ARRAY_FIELD_ENUM_COUNT)
 
 #define _array_get_stride(arr)    _array_get_field(arr, ARRAY_FIELD_STRIDE)
 #define _array_get_capacity(arr)  _array_get_field(arr, ARRAY_FIELD_CAPACITY)
 #define _array_get_size(arr)      _array_get_field(arr, ARRAY_FIELD_SIZE)
 
-u32
+uint32_t
 _array_get_field(void* arr, ARRAY_FIELD field)
 {
-    return ((u32*)arr - ARRAY_FIELD_ENUM_COUNT)[field];
+    return ((uint32_t*)arr - ARRAY_FIELD_ENUM_COUNT)[field];
 }
 
-u32
+uint32_t
 _array_size(void* arr)
 {
     return _array_get_size(arr);
@@ -35,15 +35,15 @@ _array_size(void* arr)
 #define _array_set_size(arr, val)      _array_set_field(arr, ARRAY_FIELD_SIZE, val)
 
 void
-_array_set_field(void* arr, ARRAY_FIELD field, u32 val)
+_array_set_field(void* arr, ARRAY_FIELD field, uint32_t val)
 {
-    ((u32*)arr - ARRAY_FIELD_ENUM_COUNT)[field] = val;
+    ((uint32_t*)arr - ARRAY_FIELD_ENUM_COUNT)[field] = val;
 }
 
 void*
-_array_alloc(u32 init_capacity, u32 stride) {
-    u32 array_size = init_capacity * stride;
-    u32* array = (u32*)malloc(HEADER_SIZE + array_size);
+_array_alloc(uint32_t init_capacity, uint32_t stride) {
+    uint32_t array_size = init_capacity * stride;
+    uint32_t* array = (uint32_t*)malloc(HEADER_SIZE + array_size);
     
     array[ARRAY_FIELD_STRIDE]   = stride;
     array[ARRAY_FIELD_CAPACITY] = init_capacity;
@@ -64,10 +64,10 @@ _array_free(void* arr)
 }
 
 void*
-_array_resize(void* arr, u32 new_capacity)
+_array_resize(void* arr, uint32_t new_capacity)
 {
-    u32 stride  = _array_get_stride(arr);
-    u32 size    = _array_get_size(arr);
+    uint32_t stride  = _array_get_stride(arr);
+    uint32_t size    = _array_get_size(arr);
     
     assert(size <= new_capacity);
     
@@ -82,9 +82,9 @@ _array_resize(void* arr, u32 new_capacity)
 void*
 _array_push(void* arr, void* ptr_to_val)
 {
-    u32 size   = _array_get_size(arr);
-    u32 cap    = _array_get_capacity(arr);
-    u32 stride = _array_get_stride(arr);
+    uint32_t size   = _array_get_size(arr);
+    uint32_t cap    = _array_get_capacity(arr);
+    uint32_t stride = _array_get_stride(arr);
     
     if (size >= cap) {
         arr = _array_resize(arr, cap * RESIZE_SCALE_FACTOR);
@@ -98,17 +98,17 @@ _array_push(void* arr, void* ptr_to_val)
 }
 
 void*
-_array_push_at(void* arr, u32 loc, void* ptr_to_val)
+_array_push_at(void* arr, uint32_t loc, void* ptr_to_val)
 {
-    u32 size   = _array_get_size(arr);
-    u32 cap    = _array_get_capacity(arr);
-    u32 stride = _array_get_stride(arr);
+    uint32_t size   = _array_get_size(arr);
+    uint32_t cap    = _array_get_capacity(arr);
+    uint32_t stride = _array_get_stride(arr);
     
     if (size >= cap) {
         arr = _array_resize(arr, cap * RESIZE_SCALE_FACTOR);
     }
     
-    u32 i = _array_get_size(arr);
+    uint32_t i = _array_get_size(arr);
     while (i > loc) {
         memcpy((char*)arr + (i * stride), (char*)arr + ((i - 1) * stride), stride);
         i -= 1;
@@ -124,8 +124,8 @@ _array_push_at(void* arr, u32 loc, void* ptr_to_val)
 void
 _array_pop(void* arr, void* dest)
 {
-    u32 size = _array_get_size(arr);
-    u32 stride = _array_get_stride(arr);
+    uint32_t size = _array_get_size(arr);
+    uint32_t stride = _array_get_stride(arr);
     
     assert(size > 0);
     memcpy(dest, (char*)arr + ((size - 1) * stride), stride);
@@ -134,10 +134,10 @@ _array_pop(void* arr, void* dest)
 
 // array_erase preserves order
 void
-_array_erase(void* arr, u32 loc)
+_array_erase(void* arr, uint32_t loc)
 {
-    u32 size = _array_get_size(arr);
-    u32 stride = _array_get_stride(arr);
+    uint32_t size = _array_get_size(arr);
+    uint32_t stride = _array_get_stride(arr);
     
     while (loc < size - 1) {
         memcpy((char*)arr + (loc * stride), (char*)arr + ((loc + 1) * stride), stride);
@@ -148,10 +148,10 @@ _array_erase(void* arr, u32 loc)
 
 // array_erase_fast does NOT preserve order
 void
-_array_erase_fast(void* arr, u32 loc)
+_array_erase_fast(void* arr, uint32_t loc)
 {
-    u32 size = _array_get_size(arr);
-    u32 stride = _array_get_stride(arr);
+    uint32_t size = _array_get_size(arr);
+    uint32_t stride = _array_get_stride(arr);
     
     if (loc >= size) {
         return;
