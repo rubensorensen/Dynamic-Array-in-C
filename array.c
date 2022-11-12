@@ -14,31 +14,17 @@ typedef enum _ARRAY_FIELD {
 
 #define HEADER_SIZE (sizeof(uint32_t) * ARRAY_FIELD_ENUM_COUNT)
 
+#define _array_get_field(arr, field) \
+    ((uint32_t*)arr - ARRAY_FIELD_ENUM_COUNT)[field]
 #define _array_get_stride(arr)    _array_get_field(arr, ARRAY_FIELD_STRIDE)
 #define _array_get_capacity(arr)  _array_get_field(arr, ARRAY_FIELD_CAPACITY)
 #define _array_get_size(arr)      _array_get_field(arr, ARRAY_FIELD_SIZE)
 
-uint32_t
-_array_get_field(void* arr, ARRAY_FIELD field)
-{
-    return ((uint32_t*)arr - ARRAY_FIELD_ENUM_COUNT)[field];
-}
-
-uint32_t
-_array_size(void* arr)
-{
-    return _array_get_size(arr);
-}
-
+#define _array_set_field(arr, field, val) \
+    ((uint32_t*)arr - ARRAY_FIELD_ENUM_COUNT)[field] = val;
 #define _array_set_stride(arr, val)    _array_set_field(arr, ARRAY_FIELD_STRIDE, val)
 #define _array_set_capacity(arr, val)  _array_set_field(arr, ARRAY_FIELD_CAPACITY, val)
 #define _array_set_size(arr, val)      _array_set_field(arr, ARRAY_FIELD_SIZE, val)
-
-void
-_array_set_field(void* arr, ARRAY_FIELD field, uint32_t val)
-{
-    ((uint32_t*)arr - ARRAY_FIELD_ENUM_COUNT)[field] = val;
-}
 
 void*
 _array_alloc(uint32_t init_capacity, uint32_t stride) {
@@ -61,6 +47,12 @@ _array_free(void* arr)
             free(ptr);
         }
     }
+}
+
+uint32_t
+_array_size(void* arr)
+{
+    return _array_get_size(arr);
 }
 
 void*
